@@ -14,12 +14,8 @@
                         </b-form-select>
                     </b-form-group>
                     <b-form-group label="Destination:" label-for="destination">
-                        <b-form-select
-                            id="destination"
-                            v-model="destination"
-                            :options="computedDestinationLocations"
-                            :disabled="!pickup"
-                        >
+                        <b-form-select id="destination" v-model="destination" :options="computedDestinationLocations"
+                            :disabled="!pickup">
                             <template #first>
                                 <b-form-select-option value="" disabled>
                                     -- Please select your destination
@@ -28,16 +24,9 @@
                             </template>
                         </b-form-select>
                     </b-form-group>
-                    <b-form-group label="Seats:" label-for="seats">
-                        <b-form-select v-model="ticketCount" :options="seatCount" />
-                    </b-form-group>
                     <div v-if="isLoading">
-                        <b-button
-                            variant="primary"
-                            class="d-flex align-items-center justify-content-center"
-                            size="lg"
-                            disabled
-                        >
+                        <b-button variant="primary" class="d-flex align-items-center justify-content-center" size="lg"
+                            disabled>
                             <span class="mr-2">Loading...</span>
                             <b-spinner style="width: 1.5rem; height: 1.5rem;" />
                         </b-button>
@@ -56,12 +45,19 @@
                     <b-card-text>Distance: {{ routeDetails.distance | format_number }} miles</b-card-text>
                     <b-card-text>Trip Time: {{ routeDetails.time | format_number }} minutes</b-card-text>
                     <b-card-text>Price: {{ routeDetails.price | format_amount }}</b-card-text>
-                    <b-card-text>Seats: {{ ticketCount }}</b-card-text>
+                    <b-card-text v-if="seatsAvailable > 0">Seats: 
+                        <b-button class="ml-2" size="sm" @click="ticketCount--" :disabled="ticketCount === 1">-</b-button>
+                        <span class="px-2"> {{ ticketCount }} </span>
+                        <b-button size="sm" @click="ticketCount++" :disabled="ticketCount === seatsAvailable">+</b-button>
+                        <small class="ml-3">{{ seatsAvailable }} seats available</small>
+                    </b-card-text>
                     <b-card-text>Total Amount: <h3><b>{{ totalAmount | format_amount }}</b></h3></b-card-text>
                     <div class="text-center mt-4">
-                        <b-button variant="primary" size="lg" @click="showBookTicketModal = !showBookTicketModal">
-                            Book
-                            Ticket
+                        <b-button v-if="seatsAvailable > 0" variant="primary" size="lg" @click="showBookTicketModal = !showBookTicketModal">
+                            Book Ticket
+                        </b-button>
+                        <b-button v-else variant="warning" size="lg" disabled>
+                            Sorry! No seats Available
                         </b-button>
                     </div>
                 </b-card>
@@ -73,40 +69,20 @@
                     <b-form-select id="pickup" v-model="pickup" :options="computedPickupLocations" required disabled />
                 </b-form-group>
                 <b-form-group label="Destination" label-for="destination">
-                    <b-form-select
-                        id="destination"
-                        v-model="destination"
-                        :options="computedDestinationLocations"
-                        required
-                        disabled
-                    />
+                    <b-form-select id="destination" v-model="destination" :options="computedDestinationLocations" required
+                        disabled />
                 </b-form-group>
                 <b-form-group label="First name" label-for="firstname">
-                    <b-form-input
-                        id="firstname"
-                        v-model="ticketInfo.firstName"
-                        required
-                        placeholder="Kindly enter your first name"
-                        pattern="[a-zA-ZÀ-ÿ- ]+"
-                    />
+                    <b-form-input id="firstname" v-model="ticketInfo.firstName" required
+                        placeholder="Kindly enter your first name" pattern="[a-zA-ZÀ-ÿ- ]+" />
                 </b-form-group>
                 <b-form-group label="Last name" label-for="lastname">
-                    <b-form-input
-                        id="lastname"
-                        v-model="ticketInfo.lastName"
-                        required
-                        placeholder="Kindly enter your last name"
-                        pattern="[a-zA-ZÀ-ÿ- ]+"
-                    />
+                    <b-form-input id="lastname" v-model="ticketInfo.lastName" required
+                        placeholder="Kindly enter your last name" pattern="[a-zA-ZÀ-ÿ- ]+" />
                 </b-form-group>
                 <b-form-group label="Customer Email" label-for="custemail">
-                    <b-form-input
-                        id="custemail"
-                        v-model="ticketInfo.custEmail"
-                        type="email"
-                        required
-                        placeholder="Kindly provide your email address"
-                    />
+                    <b-form-input id="custemail" v-model="ticketInfo.custEmail" type="email" required
+                        placeholder="Kindly provide your email address" />
                 </b-form-group>
                 <b-form-group>
                     <b-card-text>Total Amount: <h3><b>{{ totalAmount | format_amount }}</b></h3></b-card-text>
@@ -155,16 +131,13 @@ export default {
             },
             showBookTicketModal: false,
             isLoading: false,
+            seatsAvailable: null,
         };
     },
 
     computed: {
         searchDisabled() {
             return this.pickup === "" || this.destination === "";
-        },
-
-        seatCount() {
-            return Array.from({ length: 13 }, (_, index) => index + 1);
         },
 
         computedPickupLocations() {
@@ -198,7 +171,8 @@ export default {
             };
             this.isLoading = true;
             return this.$store.dispatch("fetchSingleRoute", payload).then((response) => {
-                this.routeDetails = response.data;
+                this.routeDetails = response.data.trips;
+                this.seatsAvailable = 30 - parseInt(response.data.seats_booked)
                 this.isLoading = false;
             }).catch((error) => {
                 if (error?.response?.status === 404) {
@@ -253,6 +227,9 @@ export default {
             this.routeDetails = null;
             this.ticketInfo.custEmail = null;
             this.ticketInfo.review = 0;
+            this.ticketCount = 1;
+            this.ticketInfo.firstName = null;
+            this.ticketInfo.lastName = null;
         },
     },
 };

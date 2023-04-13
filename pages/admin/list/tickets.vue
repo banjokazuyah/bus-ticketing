@@ -102,7 +102,7 @@ export default {
                 { key: "date", label: "Date Booked", sortable: true },
                 { key: "total_amount", label: "Total Amount", sortable: true },
                 { key: "stars", label: "Review" },
-                { key: "status", label: "Status" },
+                { key: "status", label: "Status", sortable: true },
                 "Actions",
             ],
             newTicket: {

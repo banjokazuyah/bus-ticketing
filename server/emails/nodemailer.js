@@ -1,5 +1,6 @@
 
 const nodemailer = require("nodemailer");
+const { format } = require("date-fns");
 const senderEmail = process.env.EMAIL_ADDRESS_OWNER;
 const senderPassword = process.env.EMAIL_ADDRESS_PW;
 
@@ -15,6 +16,9 @@ const transporter = nodemailer.createTransport({
 
 const sendTicketInfo = (ticket) => {
     const total_amount = formatAmount(ticket.total_amount);
+    const dateString = ticket.date.toISOString().slice(0, 10);
+    const date = new Date(dateString);
+    const formattedDate = format(date, "EEEE, MMMM do yyyy");
     const emailTemplate = `
   <html>
   <head>
@@ -53,6 +57,10 @@ const sendTicketInfo = (ticket) => {
       <p>Thank you for choosing our bus ticketing app for your upcoming trip. We are excited to provide you with a hassle-free experience and look forward to serving you.</p>
       <p>Your booking details are as follows:</p>
       <table>
+        <tr>
+            <td>Date:</td>
+            <td>${formattedDate}</td>
+        </tr>
         <tr>
             <td>Ticket ID:</td>
             <td>${ticket.ticket_id}</td>

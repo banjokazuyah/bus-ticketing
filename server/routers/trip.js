@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const Trip = require("../models/trip");
 const Location = require("../models/location");
+const Ticket = require("../models/ticket");
 
 // TRIPS API
 
@@ -33,7 +34,26 @@ router.post("/api/admin/trips/getTrip", async(req, res) => {
         if (!trips) {
             return res.status(404).send({ status: "error", message: "Route does not exist" });
         }
-        res.status(200).send({ status: "Success", data: trips });
+        const startOfToday = new Date();
+        startOfToday.setHours(0, 0, 0, 0);
+
+        const endOfToday = new Date();
+        endOfToday.setHours(23, 59, 59, 999);
+        
+        const tickets = await Ticket.find({ 
+            pickup: req.body.pickup, 
+            destination: req.body.destination, 
+            status: false, 
+            date: { 
+                $gte: startOfToday.toISOString(), 
+                $lt: endOfToday.toISOString()
+            }  
+        });
+       
+        const seatsBooked = tickets.reduce((count, ticket) => {
+            return count + parseInt(ticket.seats);
+        }, 0)
+        res.status(200).send({ status: "Success", data: { trips, seats_booked: seatsBooked } });
     } catch (error) {
         return res.status(400).send({
             status: "error occurred",
