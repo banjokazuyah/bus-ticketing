@@ -82,8 +82,8 @@ const sendTicketInfo = (ticket) => {
           <td>${total_amount}</td>
         </tr>
       </table>
-      <p>We appreciate your business and want to make sure that your travel experience is as smooth as possible. Please double-check your booking details to ensure that everything is correct.</p>
-      <p>If you have any questions or concerns, please do not hesitate to contact us. We are always here to help.</p>
+      <p>We appreciate your patronage, and want to make sure that your travel experience is as smooth as possible. Please double-check your booking details to ensure that everything is correct.</p>
+      <p>If you have any questions or concerns, Please do not hesitate to contact us via  email:nmb.bus.solutions@gmail.com. We are always here to help.</p>
       <p>Thank you for choosing our service and we wish you a safe and enjoyable journey!</p>
     </body>
   </html>
