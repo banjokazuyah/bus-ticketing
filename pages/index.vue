@@ -5,6 +5,8 @@
                 <h2>The modern way to commute across cities</h2>
                 <br>
                 <p>NMBBS is a Nigerian technology powered company, providing seamless mobility services to commuters across Africa</p>
+                <br>
+                <p>NOTE: Contact us, For Ccancellations, refunds, and rescheduling via email or phone number, 24 hours before departure to avoid penalties.</p>
             </b-col>
             <b-col md="7" sm="12" xs="12">
                 <div class="search-container mt-4">
