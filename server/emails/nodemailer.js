@@ -99,7 +99,80 @@ const sendTicketInfo = (ticket) => {
     });
 };
 
+const sendPaymentUpdateInfo = (ticket) => {
+  const total_amount = formatAmount(ticket.total_amount);
+  const status = ticket.status ? "Paid" : "Unpaid";
+  const emailTemplate = `
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bus Ticket Booking Details - ID: ${ticket.ticket_id}</title>
+    <style>
+      /* Include the Montserrat font from Google Fonts */
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+      /* Apply the font to the <body> element */
+      body {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #333;
+      }
+
+      /* Apply additional styles as needed */
+      table {
+        border-collapse: collapse;
+        max-width: 500px;
+        width: 100%;
+        margin-bottom: 1em;
+      }
+
+      td {
+        padding: 0.5em;
+        border: 2px solid #ccc;
+      }
+
+      /* Add more styles here... */
+    </style>
+  </head>
+  <body>
+    <p>The booking details for this customer have been updated</p>
+    <p>Booking details are as follows:</p>
+    <table>
+      <tr>
+          <td>Ticket ID:</td>
+          <td>${ticket.ticket_id}</td>
+      </tr>
+      <tr>
+        <td>Pickup Location:</td>
+        <td>${ticket.pickup}</td>
+      </tr>
+      <tr>
+        <td>Destination:</td>
+        <td>${ticket.destination}</td>
+      </tr>
+      <tr>
+        <td>Status:</td>
+        <td>${status}</td>
+      </tr>
+      <tr>
+        <td>Amount Paid:</td>
+        <td>${total_amount}</td>
+      </tr>
+    </table>
+  </body>
+</html>
+`;
+
+  transporter.sendMail({
+      to: ticket.cust_email, // temporary
+      from: senderEmail,
+      subject: "NMBBS Ticket Information",
+      html: emailTemplate,
+  });
+};
+
 module.exports = {
     sendTicketInfo,
-
+    sendPaymentUpdateInfo
 };

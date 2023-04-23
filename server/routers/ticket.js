@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const Ticket = require("../models/ticket");
 const Location = require("../models/location");
-const { sendTicketInfo } = require("../emails/nodemailer");
+const { sendTicketInfo, sendPaymentUpdateInfo } = require("../emails/nodemailer");
 
 // Tickets API
 
@@ -78,7 +78,9 @@ router.patch("/api/admin/tickets/:id", auth, async(req, res) => {
         });
 
         await ticket.save();
-
+        if(ticket.status){
+            sendPaymentUpdateInfo(ticket);
+        }
         res.send(ticket);
     } catch (err) {
         res.status(400).send({ error: "Error occurred", message: err.message });
