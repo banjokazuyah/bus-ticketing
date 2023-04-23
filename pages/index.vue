@@ -6,7 +6,7 @@
                 <br>
                 <p>NMBBS is a Nigerian technology powered company, providing seamless mobility services to commuters across Nigeria.</p>
                 <br>
-                <p>NOTE: Contact us for cancellations, refunds or rescheduling via email or phone, number 3 hours before departure to avoid penalties.</p>
+                <p>NOTE: Contact us for cancellations, refunds or rescheduling via email or phone number, 3 hours before departure to avoid penalties.</p>
             </b-col>
             <b-col md="7" sm="12" xs="12">
                 <div class="search-container mt-4">
