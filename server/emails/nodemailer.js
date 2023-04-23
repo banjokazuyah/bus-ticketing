@@ -136,7 +136,8 @@ const sendPaymentUpdateInfo = (ticket) => {
     </style>
   </head>
   <body>
-    <p>The booking details for this customer have been updated</p>
+    <p>PAYMENT CONFIRMATION.</p>
+    <p>The booking details for this customer has been updated upon payment</p>
     <p>Booking details are as follows:</p>
     <table>
       <tr>
