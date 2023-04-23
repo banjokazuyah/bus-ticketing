@@ -94,7 +94,7 @@ const sendTicketInfo = (ticket) => {
     transporter.sendMail({
         to: ticket.cust_email, // temporary
         from: senderEmail,
-        subject: "NMBBS Payment Confirmation",
+        subject: "NMBBS Ticket Information",
         html: emailTemplate,
     });
 };
@@ -136,7 +136,6 @@ const sendPaymentUpdateInfo = (ticket) => {
     </style>
   </head>
   <body>
-    <p>PAYMENT CONFIRMATION.</p>
     <p>The payment for the booking below has been confirmed.</p>
     <p>Booking summary:</p>
     <table>
@@ -168,7 +167,7 @@ const sendPaymentUpdateInfo = (ticket) => {
   transporter.sendMail({
       to: ticket.cust_email, // temporary
       from: senderEmail,
-      subject: "NMBBS Ticket Information",
+      subject: "NMBBS Payment Confirmation",
       html: emailTemplate,
   });
 };
