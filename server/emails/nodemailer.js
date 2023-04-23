@@ -82,10 +82,10 @@ const sendTicketInfo = (ticket) => {
           <td>${total_amount}</td>
         </tr>
       </table>
-      <p>PLEASE MAKE PAYMENTS AT THE TERMINAL AT LEAST 1 HOUR BEFORE DEPATURE TO AVOID LOOSING YOUR SEAT RESERVATION.</p>
-      <p>We appreciate your patronage, and want to ensure that your travel experience is as smooth as possible. Please double-check your booking details to ensure that all details are correct.</p>
-      <p>If you have any questions or concerns, please do not hesitate to contact us via email: nmb.bus.solutions@gmail.com or Phone: +234 80 980 0000. We are always here to help.</p>
-      <p>For cancellation, refunds, and rescheduling, please ensure to reach out 3 hours before departure to avoid penalties.</p>
+      <p>PLEASE MAKE PAYMENTS AT THE TERMINAL AT LEAST 1 HOUR BEFORE DEPARTURE TO AVOID LOSING YOUR SEAT RESERVATION.</p>
+      <p>We appreciate your patronage and want to ensure that your travel experience is as smooth as possible. Please double-check your booking details to ensure that all details are correct.</p>
+      <p>If you have any questions or concerns, please do not hesitate to contact us via email: at nmb.bus.solutions@gmail.com or Phone: +234 80 980 0000. We are always here to help.</p>
+      <p>For cancellations, refunds, and rescheduling, please ensure to reach out 3 hours before departure to avoid penalties.</p>
       <p>Thank you for choosing our service and we wish you a safe and enjoyable journey!</p>
     </body>
   </html>
